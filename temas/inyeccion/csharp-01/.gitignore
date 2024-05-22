@@ -1,0 +1,19 @@
+# Ignorar la carpeta de compilación
+bin/
+obj/
+
+# Ignorar archivos de configuraciones del usuario de Visual Studio
+*.suo
+*.user
+
+# Ignorar la carpeta de paquetes NuGet
+packages/
+
+# Archivos temporales
+*.cache
+*.[Cc]ache
+*.[Tt]mp
+*.[Tt]emp
+
+# Ignorar archivos de configuración que contienen credenciales
+appsettings.json
