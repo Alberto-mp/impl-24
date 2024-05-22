@@ -1,0 +1,20 @@
+name: Run C# Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    container:
+      image: mcr.microsoft.com/dotnet/sdk:8.0
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Build and Run Tests
+      run: |
+        cd temas/delegacion/csharp-01/Tests
+        dotnet test 
