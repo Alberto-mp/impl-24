@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dart Web App</title>
+  <style>
+    .robot-section {
+      margin-bottom: 20px;
+    }
+    .robot-section div {
+      margin-bottom: 10px;
+    }
+    input[type="text"],
+    input[type="number"] {
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Prueba de Clases en Dart</h1>
+
+  <div class="robot-section">
+    <h2>Robot Inteligente</h2>
+    <div>
+      <button id="robotInteligenteHablar">Hablar</button>
+    </div>
+    <div>
+      <button id="robotInteligenteMover">Mover</button>
+      <input type="text" id="robotInteligenteMoverDireccion" placeholder="Dirección">
+    </div>
+    <div>
+      <button id="robotInteligenteGirar">Girar</button>
+      <input type="text" id="robotInteligenteGirarDireccion" placeholder="Dirección">
+    </div>
+    <div>
+      <button id="robotInteligenteSumar">Sumar</button>
+      <input type="number" id="robotInteligenteSumarA" placeholder="Número A">
+      <input type="number" id="robotInteligenteSumarB" placeholder="Número B">
+    </div>
+    <div>
+      <button id="robotInteligenteRestar">Restar</button>
+      <input type="number" id="robotInteligenteRestarA" placeholder="Número A">
+      <input type="number" id="robotInteligenteRestarB" placeholder="Número B">
+    </div>
+    <div>
+      <button id="robotInteligenteMultiplicar">Multiplicar</button>
+      <input type="number" id="robotInteligenteMultiplicarA" placeholder="Número A">
+      <input type="number" id="robotInteligenteMultiplicarB" placeholder="Número B">
+    </div>
+    <div>
+      <button id="robotInteligenteDividir">Dividir</button>
+      <input type="number" id="robotInteligenteDividirA" placeholder="Número A">
+      <input type="number" id="robotInteligenteDividirB" placeholder="Número B">
+    </div>
+    <div>
+      <button id="robotInteligenteEjecutar">Ejecutar Acciones</button>
+    </div>
+    <div id="robotInteligenteOutput"></div>
+  </div>
+
+  <div class="robot-section">
+    <h2>Robot Malvado</h2>
+    <div>
+      <button id="robotMalvadoDisparar">Disparar Láser</button>
+    </div>
+    <div>
+      <button id="robotMalvadoMover">Mover</button>
+      <input type="text" id="robotMalvadoMoverDireccion" placeholder="Dirección">
+    </div>
+    <div>
+      <button id="robotMalvadoGirar">Girar</button>
+      <input type="text" id="robotMalvadoGirarDireccion" placeholder="Dirección">
+    </div>
+    <div>
+      <button id="robotMalvadoEjecutar">Ejecutar Acciones</button>
+    </div>
+    <div id="robotMalvadoOutput"></div>
+  </div>
+
+  <div class="robot-section">
+    <h2>Persona</h2>
+    <div>
+      <button id="personaHablarButton">Hablar</button>
+    </div>
+    <div id="personaOutput"></div>
+  </div>
+
+  <script defer src="main.dart.js"></script>
+</body>
+</html>
+

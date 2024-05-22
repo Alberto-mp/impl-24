@@ -1,0 +1,51 @@
+name: Herencia en Dart (Federico y Mauro)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Dart SDK
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 'stable'
+
+      - name: Get dependencies
+        run: |
+          cd ./temas/herencia/dart
+          dart pub get
+
+      - name: Build project
+        run: |
+          cd ./temas/herencia/dart
+          dart pub global activate webdev && dart pub global run webdev build
+
+  test:
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Dart SDK
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 'stable'
+
+      - name: Get dependencies
+        run: |
+          cd ./temas/herencia/dart
+          dart pub get
+
+      - name: Run tests
+        run: |
+          cd ./temas/herencia/dart
+          dart test

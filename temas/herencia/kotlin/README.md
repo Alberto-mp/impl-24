@@ -96,7 +96,7 @@ En este ejemplo, `Gato` llama al método `comer` de `Animal` antes de agregar su
 
 Para representar la herencia con Kotlin, se ha decidido representar diferentes miembros de un grupo musical, incluyendo la gestión y la coordinación de sus actuaciones. A continuación se puede ver el código implementado:
 
-[**musicband.kt**](src/main/kotlin/musicband.kt)
+[**MusicBandMembers.kt**](src/main/kotlin/MusicBandMembers.kt)
 
 ```kt
 open class miembroGrupo(val name: String) {

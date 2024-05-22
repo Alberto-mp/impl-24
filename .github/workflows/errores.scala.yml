@@ -1,0 +1,69 @@
+name: Errores en Scala CI
+
+on:
+  #push:
+  #  branches:
+  #    - main
+  #pull_request:
+  #  branches:
+  #    - main
+  workflow_dispatch:
+    branches:
+      - main  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    
+    - name: Set up JDK 18
+      uses: actions/setup-java@v4
+      with:
+        java-version: '18'
+        distribution: 'temurin'
+
+    - name: Cache sbt
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.ivy2/cache
+          ~/.sbt
+          ~/.m2
+        key: ${{ runner.os }}-sbt-${{ hashFiles('**/*.sbt', '**/project/build.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-sbt
+    
+    - name: install sbt
+      run: |
+        echo "deb [signed-by=/usr/share/keyrings/sbt-archive-keyring.gpg] https://repo.scala-sbt.org/scalasbt/debian all main" | sudo tee /etc/apt/sources.list.d/sbt.list
+        sudo apt-get install -y curl gnupg
+        curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo gpg --dearmor | sudo tee /usr/share/keyrings/sbt-archive-keyring.gpg >/dev/null
+        sudo apt-get update
+        sudo apt-get install sbt
+
+    - name: Run tests
+      run: | 
+        cd temas/errores/scala
+        sbt compile
+        sbt test
+
+    - name: Create issue if tests fail
+      if: ${{ failure() }}
+      uses: actions/github-script@v5
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const issueTitle = 'Fallo en los Tests Automatizados';
+          const issueBody = 'Se ha detectado un fallo en los tests automáticos. Por favor revisar los resultados.';
+          const labels = ['bug'];
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: issueTitle,
+            body: issueBody,
+            labels: labels
+          });

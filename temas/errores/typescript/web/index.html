@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Pedido Service</title>
+    <style>
+        #contenedor {
+            display: flex;
+            justify-content: space-between;
+        }
+        #formulario {
+            flex: 1;
+        }
+        #listaArticulos {
+            flex: 1;
+
+        }
+        #subtitulo {
+            font-size: 1em;
+            text-align: left;
+            margin-bottom: 30px;
+        }     
+    </style>
+</head>
+
+<body>
+    <h1 id="titulo">Artículos</h1>
+    <p id="subtitulo">Tornillo   Tuerca   Sierra   Cerrojo</p>
+    <div id="contenedor">
+        <div id="formulario">
+            <input type="text" id="nombreArticulo" placeholder="Nombre del articulo">
+            <input type="number" id="cantidadArticulo" placeholder="Cantidad" oninput="this.value = Math.round(this.value)">
+            <button id="añadirArticulo">Añadir</button>
+            <button id="realizarPedido">Realizar Pedido</button>
+            <p id="mensaje"></p>
+        </div>
+        <ul id="listaArticulos"></ul>
+    </div>
+
+    <script>
+        let articulos = [];
+
+        document.getElementById('añadirArticulo').addEventListener('click', () => {
+            const nombreArticulo = document.getElementById('nombreArticulo').value;
+            const cantidadArticulo = document.getElementById('cantidadArticulo').value;
+
+            // Añade el artículo a la lista
+            articulos.push({ nombre: nombreArticulo, cantidad: Number(cantidadArticulo) });
+
+            // Muestra el artículo por pantalla
+            const li = document.createElement('li');
+            li.textContent = `${nombreArticulo} - ${cantidadArticulo}`;
+            document.getElementById('listaArticulos').appendChild(li);
+        });
+
+        document.getElementById('realizarPedido').addEventListener('click', async () => {           
+             try {
+                const response = await fetch('http://localhost:3300/realizarPedido', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(articulos)
+                });
+
+                if (!response.ok) {
+                    throw new Error(await response.text());
+                }
+
+                document.getElementById('mensaje').textContent = 'Pedido realizado con éxito';
+                // Limpia la lista de artículos después de realizar el pedido
+                articulos = [];
+                document.getElementById('listaArticulos').innerHTML = '';
+            
+            // Capturar el error y muestra el mensaje
+            } catch (error) {
+                document.getElementById('mensaje').textContent = error.message;
+            
+            // Borrar la Lista de Artículos
+            } finally{
+                articulos = [];
+                document.getElementById('listaArticulos').innerHTML = '';
+            }
+
+            
+        });
+    </script>
+</body>
+
+</html>

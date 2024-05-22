@@ -1,0 +1,56 @@
+name: Abstracción en Ruby (Federico y Mauro)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.0.0
+        
+    - name: Install dependencies
+      run: |
+        gem install bundler
+        cd ./temas/abstraccion/ruby-02
+        bundle install
+        
+    - name: Run tests in specified directory
+      run: |
+        cd ./temas/abstraccion/ruby-02/test
+        ruby figura_test.rb
+        ruby hablador_test.rb
+        ruby robot_test.rb
+        
+  deploy:
+    runs-on: ubuntu-latest
+    
+    needs: test
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.0.0
+        
+    - name: Install dependencies
+      run: |
+        gem install bundler
+        cd ./temas/abstraccion/ruby-02
+        bundle install
+        
+    - name: Run Ruby script
+      run: |
+        cd ./temas/abstraccion/ruby-02/src
+        ruby figura.rb
+        ruby robot.rb
