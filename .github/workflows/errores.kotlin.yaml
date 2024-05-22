@@ -1,0 +1,33 @@
+name: Kotlin CI Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: 17
+        distribution: 'temurin'
+
+    - name: install gradle
+      run: |
+        wget https://services.gradle.org/distributions/gradle-8.7-bin.zip
+        sudo unzip gradle-8.7-bin.zip -d /opt/gradle
+        echo "export PATH=$PATH:/opt/gradle/gradle-8.7/bin" >> $GITHUB_ENV
+    
+    - name: Verify Gradle version
+      run: gradle -version
+
+    - name: Build and Test with Gradle
+      run: |
+        cd temas/errores/kotlin
+        gradle build
+        gradle test
